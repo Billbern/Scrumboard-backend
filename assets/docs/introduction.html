@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scrumboard Docs</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body{
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        body{
+            color: #333;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.18;
+            padding: 1rem 2rem 0.5rem 2rem;
+        }
+
+        h1, h2, h3, h4, h5, h6{
+            font-weight: 600;
+        }
+
+        main{
+            width: 100%;
+            height: 100%;
+        }
+
+        main a{
+            color: #333;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        main a:focus{
+            color: #16a1a1;
+        }
+
+        main header{
+            padding: 1rem 0;
+            width: 100%;
+        }
+
+        main ul{
+            padding-left: 0.5rem;
+            list-style: none;
+        }
+
+        main ul li {
+            padding: 0.5rem 0;
+        }
+
+        main .main_holder{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
+        }
+
+        .main_holder > div:first-child{
+            flex-basis: auto;
+            width: 40%;
+            height: 100%;
+        }
+
+        .main_holder > div:last-child{
+            flex-basis: auto;
+            width: 70%;
+            height: 100%;
+            position: relative;
+        }
+
+        .main_holder div .content {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            background-color: #ccc;
+        }
+
+
+    </style>
+</head>
+<body>
+    <main>
+        <header>
+            <h1><a href="/">Scrumboard</a> Docs &CenterDot; Introduction</h1>
+        </header>
+        <div>
+            <ul>
+                <li>
+                    <a href="introduction.html">
+                        <h4>Introduction</h4>
+                    </a>
+                </li>
+                <li>
+                    <a href="howitworks.html">
+                        <h4>How It Works</h4>
+                    </a>
+                </li>
+                <li>
+                    <a href="apiroutes.html">
+                        <h4>API Routes</h4>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </main>
+</body>
+</html>
