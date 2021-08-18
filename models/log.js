@@ -4,18 +4,21 @@ const { mongoose } = require('../config/db');
 const Schema = mongoose.Schema;
 
 // create an actual schema
-const TaskSchema = new Schema({
-    id: String, 
-    title: String, 
-    tag: String,  
-    timed: Date , 
-    reward: String, 
-    stage: String,
+const LogSchema = new Schema({
+    message: String, 
+    task: {
+        type: Schema.Types.ObjectId,
+        ref: 'Task'
+    },
     owner: {
         type: Schema.Types.ObjectId,
         ref: 'User'
+    },
+    createAt: {
+        type: Date,
+        default: Date.now
     }
 });
 
 // add to database models
-module.exports = mongoose.model("Task", TaskSchema);
+module.exports = mongoose.model("Log", LogSchema);

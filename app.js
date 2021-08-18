@@ -1,6 +1,10 @@
 require('dotenv').config();
-let path = require("path");
+const path = require("path");
 let express = require("express");
+const cookieParser = require("cookie-parser");
+const cors = require('cors');
+
+
 let connection = require('./config/db');
 const assets = path.join(__dirname, 'assets');
 
@@ -8,14 +12,20 @@ const assets = path.join(__dirname, 'assets');
 let app = express();
 let port = process.env.PORT || 2200;
 
+// set Cookies, static folder and add Access-Control-Allow-Origin requests header
+app.use(cookieParser());
 app.use(express.static(assets));
+app.use(cors({origin: 'http://localhost:3000', credentials: true}));
 
 // access database connection and api route
 const db = connection;
-const route = { api: require('./routes/api') }
+const route = { singles: require('./routes/singledata'), multis: require('./routes/multidata'), auth: require('./routes/auth')}
 
 // handle requests to api route and docs
-app.use('/api/v1', route.api);
+app.use('/api/v1', route.singles);
+app.use('/api/v1', route.multis);
+app.use('/api/v1', route.auth);
+
 
 app.get('/:file', (req, res)=>{
     res.sendFile(path.join(assets, `/docs/${req.params.file}`));
