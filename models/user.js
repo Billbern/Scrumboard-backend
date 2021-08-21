@@ -9,7 +9,7 @@ const UserSchema = new Schema({
     email: String, 
     password: String,
     tasks: [{type: Schema.Types.ObjectId, ref: 'Task'}]
-});
+}, {timestamps: true });
 
 // add to database models
 module.exports = mongoose.model("User", UserSchema);
