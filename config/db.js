@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
         await mongoose.connect(process.env.DATABASE_URI, { useNewUrlParser: true, 
             useNewUrlParser: true, 
             useUnifiedTopology : true, 
-            useFindAndModify: true 
+            useFindAndModify: false 
         });
     } catch (err) {
         console.error(err);

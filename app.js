@@ -15,7 +15,7 @@ let port = process.env.PORT || 2200;
 // set Cookies, static folder and add Access-Control-Allow-Origin requests header
 app.use(cookieParser());
 app.use(express.static(assets));
-app.use(cors({origin: 'http://localhost:3000', credentials: true}));
+app.use(cors({origin: process.env.FRONT_ORIGIN, credentials: true}));
 
 // access database connection and api route
 const db = connection;
