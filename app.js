@@ -35,6 +35,19 @@ app.get('/', (req, res)=>{
     res.sendFile(path.join(assets, '/docs/index.html'));
 })
 
+// process.on('uncaughtException', (err)=>{
+//     if(err instanceof TypeError) {
+//         throw "Type error";
+//     }else if(err instanceof ReferenceError ){
+//         throw "Reference Error";
+//     }else if(err instanceof RangeError){
+//         throw "Range error";
+//     }else{
+//         throw "Unknown error";
+//     }
+// })
+
+// null.length();
 
 // listen for incoming requests on port 
 app.listen(port, ()=>{

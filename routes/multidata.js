@@ -32,7 +32,7 @@ route.get('/logs', verifyToken, async (req, res) => {
     try {
         const verifyUser = await jwt.verify(req.params.token, process.env.SECRET_KEY);
         if (verifyUser) {
-            let logs = await Logs.find({ owner: verifyUser.id }).populate('task', 'id');
+            let logs = await Logs.find({ owner: verifyUser.id }).sort({'createAt': -1}).populate('task', 'id').limit(10);
             res.status(200).json(logs);
         } else {
             res.clearCookie('ahyensew');
