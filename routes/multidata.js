@@ -28,11 +28,16 @@ route.get('/tasks', verifyToken, async (req, res) => {
 })
 
 
-route.get('/logs', verifyToken, async (req, res) => {
+route.get('/logs/:nombre', verifyToken, async (req, res) => {
     try {
         const verifyUser = await jwt.verify(req.params.token, process.env.SECRET_KEY);
         if (verifyUser) {
-            let logs = await Logs.find({ owner: verifyUser.id }).sort({'createAt': -1}).populate('task', 'id').limit(10);
+            let logs = null;
+            if(parseInt(req.params.nombre) !== 0){
+                logs = await Logs.find({ owner: verifyUser.id }).sort({'createAt': -1}).populate('task', 'id').limit(parseInt(req.params.nombre));
+            }else{
+                logs = await Logs.find({ owner: verifyUser.id }).sort({'createAt': -1}).populate('task', 'id')
+            }
             res.status(200).json(logs);
         } else {
             res.clearCookie('ahyensew');
