@@ -9,7 +9,6 @@ route.use(express.json());
 const Task = require('../models/task');
 const Logs = require('../models/log');
 const verifyToken = require('../utils/verifytoken');
-const { reset } = require('nodemon');
 
 // handle read requests for all tasks
 route.get('/tasks', verifyToken, async (req, res) => {
