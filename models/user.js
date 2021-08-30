@@ -8,7 +8,10 @@ const UserSchema = new Schema({
     username: String, 
     email: String, 
     password: String,
-    tasks: [{type: Schema.Types.ObjectId, ref: 'Task'}]
+    picture: {
+        type: String,
+        default: ''
+    }
 }, {timestamps: true });
 
 // add to database models

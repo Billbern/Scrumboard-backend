@@ -16,7 +16,7 @@ route.post('/login', async (req, res) => {
                 const token = await jwt.sign({id: logUser._id}, process.env.SECRET_KEY, { expiresIn: '8h' })
                 if (token) {
                     res.cookie('ahyensew', token, {sameSite: "lax",  domain: '' , httpOnly: true, expires: new Date(moment().add(8, 'hours'))});
-                    res.status(200).json({loggedIn: true, token: token, user: logUser.username});
+                    res.status(200).json({loggedIn: true, user:{ name: logUser.username, mail: logUser.email, pic: logUser.picture }});
                 }else{
                     res.status(500).json('Sorry something went wrong');
                 }

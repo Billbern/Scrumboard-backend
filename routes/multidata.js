@@ -9,6 +9,7 @@ route.use(express.json());
 const Task = require('../models/task');
 const Logs = require('../models/log');
 const verifyToken = require('../utils/verifytoken');
+const { reset } = require('nodemon');
 
 // handle read requests for all tasks
 route.get('/tasks', verifyToken, async (req, res) => {
@@ -16,37 +17,37 @@ route.get('/tasks', verifyToken, async (req, res) => {
         const verifyUser = await jwt.verify(req.params.token, process.env.SECRET_KEY);
         if (verifyUser) {
             let tasks = await Task.find({ owner: verifyUser.id }).populate('owner', 'username');
-            res.status(200).json(tasks);
+            if (tasks.length > 0 ) {
+                res.status(200).json(tasks);
+            }else{
+                res.status(200).json([]);
+            }
         } else {
-            res.clearCookie('ahyensew');
             res.status(403).json("User not authorized")
         }
     } catch (err) {
-    console.error(err);
-    res.status(500).json("Error")
-}
+        res.status(500).json("Error")
+    }
 })
 
 
-route.get('/logs/:nombre', verifyToken, async (req, res) => {
+route.get('/logs', verifyToken, async (req, res) => {
     try {
         const verifyUser = await jwt.verify(req.params.token, process.env.SECRET_KEY);
         if (verifyUser) {
-            let logs = null;
-            if(parseInt(req.params.nombre) !== 0){
-                logs = await Logs.find({ owner: verifyUser.id }).sort({'createAt': -1}).populate('task', 'id').limit(parseInt(req.params.nombre));
-            }else{
-                logs = await Logs.find({ owner: verifyUser.id }).sort({'createAt': -1}).populate('task', 'id')
+            const logs = await Logs.find({ owner: verifyUser.id }).sort({ 'createAt': -1 }).populate('task', 'id');
+            if (logs.length > 0) {
+                res.status(200).json(logs);
+            } else {
+                res.status(200).json([]);
             }
-            res.status(200).json(logs);
         } else {
-            res.clearCookie('ahyensew');
-            res.status(403).json("User not authorized")
+            res.status(403).json("User Not authorised")
         }
     } catch (err) {
-    console.error(err);
-    res.status(500).json("Error")
-}
+        console.error(err);
+        res.status(500).json("Error")
+    }
 })
 
 module.exports = route;
