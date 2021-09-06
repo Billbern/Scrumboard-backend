@@ -15,9 +15,9 @@ let port = process.env.PORT || 2200;
 // set Cookies, static folder and add Access-Control-Allow-Origin requests header
 app.use(cookieParser());
 app.use(express.static(assets));
+// allowedHeaders: ['Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept'],
 app.use(cors({
     origin: process.env.FRONT_ORIGIN,
-    // allowedHeaders: ['Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept'],
     credentials: true
 }));
 

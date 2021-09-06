@@ -12,6 +12,7 @@ const verifyToken = require('../utils/verifytoken');
 
 // handle read requests for all tasks
 route.get('/tasks', verifyToken, async (req, res) => {
+    console.info(req.headers());
     try {
         const verifyUser = await jwt.verify(req.params.token, process.env.SECRET_KEY);
         if (verifyUser) {
@@ -31,6 +32,7 @@ route.get('/tasks', verifyToken, async (req, res) => {
 
 
 route.get('/logs', verifyToken, async (req, res) => {
+    console.info(req.headers());
     try {
         const verifyUser = await jwt.verify(req.params.token, process.env.SECRET_KEY);
         if (verifyUser) {
