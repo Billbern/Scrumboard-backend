@@ -17,6 +17,7 @@ app.use(cookieParser());
 app.use(express.static(assets));
 app.use(cors({
     origin: process.env.FRONT_ORIGIN,
+    // allowedHeaders: ['Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept'],
     credentials: true
 }));
 
