@@ -2,11 +2,12 @@ require('dotenv').config();
 const path = require("path");
 let express = require("express");
 const cookieParser = require("cookie-parser");
-const cors = require('cors');
+const corsWare = require('./config/cors');
 
 
 let connection = require('./config/db');
 const assets = path.join(__dirname, 'assets');
+
 
 // access express 
 let app = express();
@@ -15,26 +16,25 @@ let port = process.env.PORT || 2200;
 // set Cookies, static folder and add Access-Control-Allow-Origin requests header
 app.use(cookieParser());
 app.use(express.static(assets));
-// allowedHeaders: ['Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept'],
-app.use(cors({
-    origin: process.env.FRONT_ORIGIN,
-    credentials: true
-}));
+app.use(corsWare);
 
 // access database connection and api route
 const db = connection;
 const route = {
-    singles: require('./routes/singledata'),
-    multis: require('./routes/multidata'),
+    user: require('./routes/user'),
     auth: require('./routes/auth'),
-    user: require('./routes/user')
+    multis: require('./routes/multidata'),
+    singles: require('./routes/singledata')
 }
 
+
 // handle requests to api route and docs
-app.use('/api/v1', route.singles);
-app.use('/api/v1', route.multis);
+app.options('*', corsWare);
 app.use('/api/v1', route.auth);
 app.use('/api/v1', route.user);
+app.use('/api/v1', route.singles);
+app.use('/api/v1', route.multis);
+
 
 
 app.get('/:file', (req, res) => {

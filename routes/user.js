@@ -1,6 +1,7 @@
-const express = require('express');
-const jwt = require('jsonwebtoken');
-let route = express.Router();
+const express = require('express'),
+        jwt = require('jsonwebtoken'),
+        route = express.Router();
+        
 
 // use json
 route.use(express.json());
@@ -8,7 +9,6 @@ route.use(express.json());
 // get document model for accessing data
 const User = require('../models/user');
 const verifyToken = require('../utils/verifytoken');
-
 
 // handle an edit request for a task
 route.put('/profile', verifyToken, async (req, res)=>{

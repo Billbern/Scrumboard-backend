@@ -13,17 +13,17 @@ route.post('/login', async (req, res) => {
         if (logUser) {
             const match = await bcrypt.compare(req.body.password, logUser.password);
             if (match) {
-                const token = await jwt.sign({id: logUser._id}, process.env.SECRET_KEY, { expiresIn: '8h' })
+                const token = await jwt.sign({ id: logUser._id }, process.env.SECRET_KEY, { expiresIn: '8h' })
                 if (token) {
-                    res.cookie('ahyensew', token, {sameSite: "lax", secure: true,  domain: '' , httpOnly: true, expires: new Date(moment().add(8, 'hours'))});
-                    res.status(200).json({loggedIn: true, user:{ name: logUser.username, mail: logUser.email, pic: logUser.picture }});
-                }else{
+                    res.cookie('ahyensew', token, { sameSite: "none", secure: true, domain: '', httpOnly: true, expires: new Date(moment().add(8, 'hours')) });
+                    res.status(200).json({ loggedIn: true, user: { name: logUser.username, mail: logUser.email, pic: logUser.picture } });
+                } else {
                     res.status(500).json('Sorry something went wrong');
                 }
-            }else{
+            } else {
                 res.status(400).json('Wrong Username or Password');
             }
-        }else{
+        } else {
             res.status(400).json('Wrong Username or Password');
         }
     } catch (err) {
@@ -44,7 +44,7 @@ route.post('/register', async (req, res) => {
     }
 })
 
-route.get('/logout', async (req, res)=>{
+route.get('/logout', async (req, res) => {
     res.clearCookie('ahyensew');
     res.status(200).json('Done');
 })

@@ -1,6 +1,6 @@
-const express = require('express');
-const jwt = require('jsonwebtoken');
-let route = express.Router();
+const express = require('express'),
+        jwt = require('jsonwebtoken'),
+        route = express.Router();
 
 // use json
 route.use(express.json());
@@ -10,9 +10,9 @@ const Task = require('../models/task');
 const Logs = require('../models/log');
 const verifyToken = require('../utils/verifytoken');
 
+
 // handle read requests for all tasks
 route.get('/tasks', verifyToken, async (req, res) => {
-    console.info(req.headers());
     try {
         const verifyUser = await jwt.verify(req.params.token, process.env.SECRET_KEY);
         if (verifyUser) {
@@ -23,7 +23,7 @@ route.get('/tasks', verifyToken, async (req, res) => {
                 res.status(200).json([]);
             }
         } else {
-            res.status(403).json("User not authorized")
+            res.status(401).json("User not authorized")
         }
     } catch (err) {
         res.status(500).json("Error")
@@ -32,7 +32,6 @@ route.get('/tasks', verifyToken, async (req, res) => {
 
 
 route.get('/logs', verifyToken, async (req, res) => {
-    console.info(req.headers());
     try {
         const verifyUser = await jwt.verify(req.params.token, process.env.SECRET_KEY);
         if (verifyUser) {
@@ -43,7 +42,7 @@ route.get('/logs', verifyToken, async (req, res) => {
                 res.status(200).json([]);
             }
         } else {
-            res.status(403).json("User Not authorised")
+            res.status(401).json("User Not authorised")
         }
     } catch (err) {
         console.error(err);
